@@ -13,22 +13,19 @@ class _LoginPageState extends State<LoginPage> {
   String name = "";
   bool changeButton = false;
 
-  final _formKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   moveToHome(BuildContext context) async{
-    if (_formKey.currentState.validate()){
-      setState(() {
-        changeButton = true;
-      });
-    }
-    setState(() {
-      changeButton = true;
-    });
-    await Future.delayed(Duration(seconds: 1));
-    await Navigator.pushNamed(context, MyRoutes.homeRoute);
-    setState(() {
-      changeButton = false;
-    });
+   if(_formKey.currentState!.validate()) {
+     setState(() {
+       changeButton = true;
+     });
+     await Future.delayed(Duration(seconds: 1));
+     await Navigator.pushNamed(context, MyRoutes.homeRoute);
+     setState(() {
+       changeButton = false;
+     });
+   }
   }
   @override
   Widget build(BuildContext context) {
@@ -66,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: "Username",
                       ),
                       validator: (value){
-                          if(value.isEmpty){
+                          if(value!.isEmpty){
                             return "Username can't be empty";
                           }
                           return null;
@@ -89,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                         if(value!.isEmpty){
                           return "Password can't be empty";
                         }
-                        else if(value!.length < 6){
+                        else if(value.length < 6){
                           return "Password length should be atleast 6";
                         }
                         return null;
